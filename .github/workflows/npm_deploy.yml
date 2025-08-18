@@ -30,6 +30,8 @@ jobs:
       # Paso 5: Compilar la librería de Angular
       - name: Build Angular library
         run: npx ng build a-tailwind-calendar --configuration production # Especifica el proyecto a compilar
+      
+      - name: Change directory to dist/a-tailwind-calendar
         run: cd dist/a-tailwind-calendar && npm pack # Empaqueta la librería para NPM
 
       # Paso 6: Publico el paquete en NPM
