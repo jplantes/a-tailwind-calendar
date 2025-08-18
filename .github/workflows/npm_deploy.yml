@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Versión de Node.js que deseas usar
+          node-version: '20' # Versión de Node.js que deseas usar
           registry-url: 'https://registry.npmjs.org' # Registro de NPM
 
       # Paso 3: Instalar dependencias
@@ -30,11 +30,11 @@ jobs:
       # Paso 5: Compilar la librería de Angular
       - name: Build Angular library
         run: npx ng build a-tailwind-calendar --configuration production # Especifica el proyecto a compilar
-        un: cd dist/a-tailwind-calendar && npm pack # Empaqueta la librería para NPM
+        run: cd dist/a-tailwind-calendar && npm pack # Empaqueta la librería para NPM
 
       # Paso 6: Publico el paquete en NPM
       - name: Publish the package to NPM
-        run: npm publish 
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # NPM will automatically authenticate with this
 
