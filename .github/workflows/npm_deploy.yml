@@ -1,0 +1,45 @@
+name: Build and Publish Angular Library to npm
+
+on:
+  # Se ejecuta cuando se hace push a la rama main
+  push:
+    branches:
+      - main
+    # También se ejecuta cuando se crea una nueva etiqueta de versión (versionado semántico)
+    tags:
+      - 'v*' # Ejemplo: v1.0.0, v2.1.3
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Clonar el repositorio
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Paso 2: Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # Versión de Node.js que deseas usar
+          registry-url: https://registry.npmjs.org/ # Registro de npm
+
+      # Paso 3: Instalar dependencias
+      - name: Install dependencies
+        run: npm ci
+
+      # Paso 4: Compilar la librería de Angular
+      - name: Build Angular library
+        run: npx ng build a-tailwind-calendar --configuration production
+
+      # Paso 5: Empaquetar la librería para npm
+      - name: Package Angular library
+        run: cd dist/a-tailwind-calendar && npm pack
+
+      # Paso 6: Publicar en npm
+      - name: Publish to npm
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }} # Token de autenticación de npm
+          package: dist/a-tailwind-calendar/*.tgz # Archivo .tgz generado por npm pack

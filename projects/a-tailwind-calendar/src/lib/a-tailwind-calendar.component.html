@@ -1,0 +1,27 @@
+<div class="relative w-full" [ngClass]="{ 'animate-pulse': isLoading() }">
+  <div class="flex items-center justify-between mb-2">
+    <app-input-group icon="calendar">
+      <input
+        (click)="toggleCalendar()"
+        (focus)="showCalendar()"
+        [value]="formattedDate"
+        placeholder="dd/mm/aaaa"
+        name="input-calendar"
+        type="text"
+        [disabled]="disabled()"
+        readonly />
+    </app-input-group>
+
+    @if (isCalendarVisible) {
+      <app-datepicker
+        [ngClass]="{ 'hidden ': !toggle() }"
+        (dateSelected)="onDateSelected($event)"
+        [currentDate]="calendarDate"
+        [nonWorkingDay]="nonWorkingDay()"
+        [disabledDayWeek]="disabledDayWeek()"
+        [selects]="selectorsOfDate()"
+        [selectableDays]="selectableDays()">
+      </app-datepicker>
+    }
+  </div>
+</div>

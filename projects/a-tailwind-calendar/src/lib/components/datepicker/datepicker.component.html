@@ -1,0 +1,68 @@
+<div
+  class="w-full border border-gray-600 max-w-xs mt-2 right-0 bg-white shadow-lg rounded-md overflow-hidden absolute z-20 min-w-[320px]">
+  <div class="flex justify-between items-center p-5 pb-0 text-black">
+    <button class="font-semibold text-md" (click)="prevMonth()">
+      <app-icons iconName="arrow-left" class="fill-black" iconHeight="18" iconWidth="18"></app-icons>
+    </button>
+
+    @if (selects()) {
+      <div class="w-3/4 flex gap-3">
+        <app-input-group [icon]="'arrow-down'" height="18" width="18" margin="mr-1" class="w-3/4">
+          <select
+            [value]="calendarDate().getMonth()"
+            (change)="monthChange($event)"
+            class="capitalize text-md h-[30px] py-0">
+            @for (month of months; track $index) {
+              <option [value]="$index" [selected]="$index === calendarDate().getMonth()">
+                {{ month }}
+              </option>
+            }
+          </select>
+        </app-input-group>
+
+        <app-input-group [icon]="'arrow-down'" height="18" width="18" margin="mr-1" class="w-1/2">
+          <select [value]="calendarDate().getFullYear()" (change)="yearChange($event)" class="text-md h-[30px] py-0">
+            @for (year of years; track $index) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
+        </app-input-group>
+      </div>
+    } @else {
+      <p class="capitalize font-semibold text-md">
+        {{ calendarDate().toLocaleString('default', { month: 'long' }) }} {{ calendarDate().getFullYear() }}
+      </p>
+    }
+
+    <button class="font-semibold text-md" (click)="nextMonth()">
+      <app-icons iconName="arrow-right" class="fill-black" iconHeight="18" iconWidth="18"></app-icons>
+    </button>
+  </div>
+
+  <div class="grid grid-cols-7 text-center p-5">
+    @for (day of daysOfWeek; track $index) {
+      <div class="capitalize text-sm text-purple-900">
+        {{ day }}
+      </div>
+    }
+
+    @for (day of daysInMonth(); track $index) {
+      <button
+        (click)="!isInabledDay(day) && selectDay(day)"
+        class="py-2 px-0 rounded-md text-sm"
+        [ngClass]="{
+          'bg-purple-900 text-white': selectedDate() ? isSelected(day) : isToday(day),
+          'text-gray-200 cursor-not-allowed': isInabledDay(day),
+          'text-gray-800 hover:text-purple-500':
+            day > 0 && !isSelected(day) && !isToday(day) && !isInabledDay(day),
+          'cursor-default': day === 0,
+        }">
+        @if (day !== 0) {
+          <div class="text-sm">
+            {{ day }}
+          </div>
+        }
+      </button>
+    }
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<section class="container mx-auto p-4">
+  <h1 class="text-2xl mb-4">Calendar</h1>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div>
+      <p class="mt-2 mb-6">Sin configuraciones</p>
+      <a-tailwind-calendar />
+    </div>
+  
+    <div>
+      <p class="mt-2 mb-6">Fines de semanas bloqueados</p>
+      
+      <a-tailwind-calendar
+        [disabledDayWeek]="[0,6]"
+      />
+    </div>
+
+    <div>
+      <p class="mt-2 mb-6">Días habilitados</p>
+      <a-tailwind-calendar
+        [selectableDays]="['20/10/2023', '21/10/2023', '22/10/2023', '23/10/2023']"
+      />
+    </div>
+
+    <div>
+      <p class="mt-2 mb-6">Días feriados</p>
+      <a-tailwind-calendar
+        [nonWorkingDay]="['20/10/2023', '21/10/2023', '22/10/2023', '23/10/2023']"
+      />
+    </div>
+  </div>
+</section>
+

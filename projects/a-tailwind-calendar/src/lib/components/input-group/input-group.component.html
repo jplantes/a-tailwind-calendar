@@ -1,0 +1,11 @@
+@if (icon()) {
+  <app-icons
+    [iconName]="icon()"
+    class="absolute fill-gray-800 pointer-events-none z-10 flex items-center h-6 w-6 self-center justify-self-end forced-colors:hidden {{
+      margin()
+    }}" />
+}
+
+<ng-content></ng-content>
+
+
